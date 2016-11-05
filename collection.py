@@ -10,8 +10,7 @@ logging.getLogger().setLevel(logging.DEBUG)
 
 
 music_master = cohydra.profile.RootProfile(
-  #top_dir='/home/dseomn/Music/master',
-  top_dir='/tmp/tmp.RtgBlV2sVk/master',
+  top_dir='/home/dseomn/Music/master',
   )
 
 
@@ -126,8 +125,7 @@ def music_default_select_cb(profile, dir, contents):
   return keep
 
 music_default = cohydra.profile.FilterProfile(
-  #top_dir='/home/dseomn/Music/profiles/default',
-  top_dir='/tmp/tmp.RtgBlV2sVk/default',
+  top_dir='/home/dseomn/Music/profiles/default',
   parent=music_master,
   select_cb=music_default_select_cb,
   )
@@ -154,8 +152,7 @@ def music_large_convert_cb(profile, src, dst):
     )
 
 music_large = cohydra.profile.ConvertProfile(
-  #top_dir='/home/dseomn/Music/profiles/large',
-  top_dir='/tmp/tmp.RtgBlV2sVk/large',
+  top_dir='/home/dseomn/Music/profiles/large',
   parent=music_default,
   select_cb=music_large_select_cb,
   convert_cb=music_large_convert_cb,
@@ -182,8 +179,7 @@ def music_videos_select_cb(profile, dir, contents):
   return keep
 
 music_videos = cohydra.profile.FilterProfile(
-  #top_dir='/home/dseomn/Videos/[music]',
-  top_dir='/tmp/tmp.RtgBlV2sVk/videos',
+  top_dir='/home/dseomn/Videos/[music]',
   parent=music_master,
   select_cb=music_videos_select_cb,
   )
