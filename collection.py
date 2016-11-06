@@ -9,6 +9,13 @@ import cohydra.profile
 logging.getLogger().setLevel(logging.DEBUG)
 
 
+mimetypes.add_type('application/CDFV2-unknown', '.jwl', False)
+mimetypes.add_type('application/octet-stream', '.ncd', False)
+mimetypes.add_type('application/x-cdrdao-toc', '.toc', False)
+mimetypes.add_type('text/url', '.url', False)
+mimetypes.add_type('video/mp4', '.m4v', False)
+
+
 music_master = cohydra.profile.RootProfile(
   top_dir='/home/dseomn/Music/master',
   )
@@ -34,18 +41,20 @@ def music_default_select_cb(profile, dir, contents):
       # Skip it.
       continue
 
-    mime, encoding = mimetypes.guess_type(entry.path)
+    if entry.name.endswith('.disable'):
+      continue
+    elif entry.name.endswith('.original'):
+      continue
+
+    mime, encoding = mimetypes.guess_type(entry.path, strict=False)
     if mime is None:
-      if entry.name.endswith('.toc'):
-        mime = 'application/x-cdrdao-toc'
-      else:
-        profile.log(
-          logging.ERROR,
-          'Unknown mimetype for %r',
-          entry.path,
-          )
-        keep.append(entry)
-        continue
+      profile.log(
+        logging.ERROR,
+        'Unknown mimetype for %r',
+        entry.path,
+        )
+      keep.append(entry)
+      continue
 
     mime_major, __discard, __discard = mime.partition('/')
 
@@ -167,7 +176,7 @@ def music_videos_select_cb(profile, dir, contents):
       keep.append(entry)
       continue
 
-    mime, encoding = mimetypes.guess_type(entry.path)
+    mime, encoding = mimetypes.guess_type(entry.path, strict=False)
     if mime is None:
       continue
 
