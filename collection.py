@@ -109,7 +109,7 @@ def music_default_select_cb(profile, dir, contents):
             return keep + [image]
         elif prefix is not None:
           if image.name.startswith(prefix + '.'):
-            self.log(
+            profile.log(
               logging.INFO,
               'Using sub-optimal image %r',
               image.path,
@@ -117,14 +117,14 @@ def music_default_select_cb(profile, dir, contents):
             return keep + [image]
         elif suffix is not None:
           if image.name.endswith('.' + suffix):
-            self.log(
+            profile.log(
               logging.INFO,
               'Using sub-optimal image %r',
               image.path,
               )
             return keep + [image]
         else:
-          self.log(
+          profile.log(
             logging.WARNING,
             'Using arbitrary image %r',
             image.path,
