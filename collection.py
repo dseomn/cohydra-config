@@ -82,6 +82,7 @@ def music_default_select_cb(profile, dir, contents):
         )
       keep.append(entry)
 
+  folder_image_prefix = os.path.join(dir, 'folder.')
   for prefix in (
       'front',
       'cover',
@@ -106,12 +107,17 @@ def music_default_select_cb(profile, dir, contents):
       for image in images:
         if prefix is not None and suffix is not None:
           if image.name == prefix + '.' + suffix:
-            return keep + [image]
+            return keep + [(image, folder_image_prefix + suffix)]
         elif prefix is not None:
           if image.name.startswith(prefix + '.'):
             profile.log(
               logging.INFO,
               'Using sub-optimal image %r',
+              image.path,
+              )
+            profile.log(
+              logging.WARNING,
+              'Not renaming image %r',
               image.path,
               )
             return keep + [image]
@@ -122,11 +128,16 @@ def music_default_select_cb(profile, dir, contents):
               'Using sub-optimal image %r',
               image.path,
               )
-            return keep + [image]
+            return keep + [(image, folder_image_prefix + suffix)]
         else:
           profile.log(
             logging.WARNING,
             'Using arbitrary image %r',
+            image.path,
+            )
+          profile.log(
+            logging.WARNING,
+            'Not renaming image %r',
             image.path,
             )
           return keep + [image]
