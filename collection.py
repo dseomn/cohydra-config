@@ -152,20 +152,38 @@ music_default = cohydra.profile.FilterProfile(
 
 
 def music_large_select_cb(profile, src_relpath):
+  mime, encoding = mimetypes.guess_type(src_relpath, strict=False)
+  if mime is None:
+    mime_major = None
+  else:
+    mime_major, __discard, __discard = mime.partition('/')
+
   if src_relpath.endswith('.flac'):
     return src_relpath + '.ogg'
+  elif mime_major == 'image':
+    return os.path.join(os.path.dirname(src_relpath), 'folder.png')
   else:
     return None
 
 def music_large_convert_cb(profile, src, dst):
-  subprocess.run(
-    [
+  if src.endswith('.flac'):
+    command = [
       'oggenc',
       '-Q',
       '-q', '8',
       '-o', dst,
       '--', src,
-      ],
+      ]
+  else:
+    command = [
+      'convert',
+      src,
+      '-resize', '1200x1200>',
+      dst,
+      ]
+
+  subprocess.run(
+    command,
     stdout=subprocess.PIPE,
     stderr=subprocess.PIPE,
     check=True,
