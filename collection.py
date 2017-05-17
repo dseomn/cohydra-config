@@ -13,6 +13,7 @@ mimetypes.add_type('application/CDFV2-unknown', '.jwl', False)
 mimetypes.add_type('application/octet-stream', '.ncd', False)
 mimetypes.add_type('application/x-cdrdao-toc', '.toc', False)
 mimetypes.add_type('text/url', '.url', False)
+mimetypes.add_type('video/dvd', '.vob', False)
 mimetypes.add_type('video/mp4', '.m4v', False)
 
 
