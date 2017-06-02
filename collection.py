@@ -2,6 +2,7 @@ import logging
 import mimetypes
 import os
 import subprocess
+import urllib.parse
 
 import cohydra.profile
 
@@ -195,6 +196,59 @@ music_large = cohydra.profile.ConvertProfile(
   parent=music_default,
   select_cb=music_large_select_cb,
   convert_cb=music_large_convert_cb,
+  )
+
+
+def music_large_mp3_select_cb(profile, src_relpath):
+  mime, encoding = mimetypes.guess_type(src_relpath, strict=False)
+  if mime is None:
+    mime_major = None
+  else:
+    mime_major, __discard, __discard = mime.partition('/')
+
+  if src_relpath.endswith('.mp3'):
+    return None
+  elif mime_major == 'image':
+    return os.path.join(os.path.dirname(src_relpath), 'folder.png')
+  else:
+    return src_relpath + '.mp3'
+
+def music_large_mp3_convert_cb(profile, src, dst):
+  if dst.endswith('/folder.png'):
+    command = [
+      'convert',
+      src,
+      '-resize', '1200x1200>',
+      dst,
+      ]
+  else:
+    command = [
+      'gst-launch-1.0',
+      'giosrc', 'location=file://' + urllib.parse.quote(src),
+      '!',
+      'decodebin',
+      '!',
+      'audioconvert',
+      '!',
+      'lamemp3enc', 'quality=0', 'encoding-engine-quality=2',
+      '!',
+      'id3mux', 'v2-version=4',
+      '!',
+      'giosink', 'location=file://' + urllib.parse.quote(dst),
+      ]
+
+  subprocess.run(
+    command,
+    stdout=subprocess.PIPE,
+    stderr=subprocess.PIPE,
+    check=True,
+    )
+
+music_large_mp3 = cohydra.profile.ConvertProfile(
+  top_dir='/home/dseomn/Music/profiles/large-mp3',
+  parent=music_default,
+  select_cb=music_large_mp3_select_cb,
+  convert_cb=music_large_mp3_convert_cb,
   )
 
 
