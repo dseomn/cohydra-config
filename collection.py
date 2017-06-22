@@ -232,6 +232,8 @@ def music_large_mp3_convert_cb(profile, src, dst):
       '!',
       'lamemp3enc', 'quality=0', 'encoding-engine-quality=2',
       '!',
+      'xingmux',
+      '!',
       'id3mux', 'v2-version=4',
       '!',
       'giosink', 'location=file://' + urllib.parse.quote(dst),
