@@ -23,8 +23,8 @@ music_master = cohydra.profile.RootProfile(
   )
 
 
-def music_default_select_cb(profile, dir, contents):
-  dir_split = os.path.normpath(dir).split(os.sep)
+def music_default_select_cb(profile, src_relpath, dst_relpath, contents):
+  dir_split = os.path.normpath(src_relpath).split(os.sep)
   if dir_split == ['']:
     depth = 0
   else:
@@ -84,7 +84,7 @@ def music_default_select_cb(profile, dir, contents):
         )
       keep.append(entry)
 
-  folder_image_prefix = os.path.join(dir, 'folder.')
+  folder_image_prefix = os.path.join(dst_relpath, 'folder.')
   for prefix in (
       'front',
       'cover',
@@ -254,7 +254,7 @@ music_large_mp3 = cohydra.profile.ConvertProfile(
   )
 
 
-def music_videos_select_cb(profile, dir, contents):
+def music_videos_select_cb(profile, src_relpath, dst_relpath, contents):
   keep = []
 
   for entry in contents:
