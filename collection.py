@@ -7,6 +7,8 @@ import urllib.parse
 import mutagen
 import mutagen.id3
 
+import wand.image
+
 import cohydra.profile
 
 
@@ -261,6 +263,21 @@ def music_large_simple_mp3_convert_cb(profile, src, dst):
       )
     id3 = mutagen.id3.ID3(dst)
     id3.delall('RVA2')
+    for entry in os.scandir(os.path.dirname(src)):
+      if mimetypes.guess_type(entry.path, strict=False)[0].startswith('image/'):
+        with wand.image.Image(filename=entry.path) as folder_img:
+          folder_img.transform(resize='300x300>')
+          folder_img.compression_quality = 90
+          id3.setall('APIC', [
+            mutagen.id3.APIC(
+              encoding=mutagen.id3.Encoding.UTF8,
+              mime='image/jpeg',
+              type=mutagen.id3.PictureType.COVER_FRONT,
+              desc='folder.jpg',
+              data=folder_img.make_blob(format='jpeg'),
+              ),
+            ])
+        break
     id3.save()
 
 
