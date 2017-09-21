@@ -272,6 +272,12 @@ music_large_simple_mp3 = cohydra.profile.ConvertProfile(
   )
 
 
+music_large_simple_mp3_sanitized = cohydra.profile.SanitizeFilenameProfile(
+  top_dir='/home/dseomn/Music/profiles/large-simple-mp3-sanitized',
+  parent=music_large_simple_mp3,
+  )
+
+
 def music_videos_select_cb(profile, src_relpath, dst_relpath, contents):
   keep = []
 
