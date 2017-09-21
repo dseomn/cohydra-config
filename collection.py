@@ -199,6 +199,12 @@ music_large = cohydra.profile.ConvertProfile(
   )
 
 
+music_large_sanitized = cohydra.profile.SanitizeFilenameProfile(
+  top_dir='/home/dseomn/Music/profiles/large-sanitized',
+  parent=music_large,
+  )
+
+
 def music_large_mp3_select_cb(profile, src_relpath):
   mime, encoding = mimetypes.guess_type(src_relpath, strict=False)
   if mime is None:
