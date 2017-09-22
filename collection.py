@@ -215,17 +215,18 @@ def music_large_simple_mp3_select_cb(profile, src_relpath):
   if src_relpath.endswith('.mp3'):
     return None
   elif mime_major == 'image':
-    return os.path.join(os.path.dirname(src_relpath), 'folder.png')
+    return os.path.join(os.path.dirname(src_relpath), 'folder.jpg')
   else:
     return src_relpath + '.mp3'
 
 def music_large_simple_mp3_convert_cb(profile, src, dst):
-  if dst.endswith('/folder.png'):
+  if dst.endswith('/folder.jpg'):
     subprocess.run(
       [
         'convert',
         src,
-        '-resize', '1200x1200>',
+        '-resize', '300x300>',
+        '-quality', '90',
         dst,
         ],
       stdout=subprocess.PIPE,
