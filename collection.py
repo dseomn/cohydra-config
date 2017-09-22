@@ -205,7 +205,7 @@ music_large_sanitized = cohydra.profile.SanitizeFilenameProfile(
   )
 
 
-def music_large_mp3_select_cb(profile, src_relpath):
+def music_large_simple_mp3_select_cb(profile, src_relpath):
   mime, encoding = mimetypes.guess_type(src_relpath, strict=False)
   if mime is None:
     mime_major = None
@@ -219,7 +219,7 @@ def music_large_mp3_select_cb(profile, src_relpath):
   else:
     return src_relpath + '.mp3'
 
-def music_large_mp3_convert_cb(profile, src, dst):
+def music_large_simple_mp3_convert_cb(profile, src, dst):
   if dst.endswith('/folder.png'):
     subprocess.run(
       [
@@ -257,11 +257,11 @@ def music_large_mp3_convert_cb(profile, src, dst):
       )
 
 
-music_large_mp3 = cohydra.profile.ConvertProfile(
-  top_dir='/home/dseomn/Music/profiles/large-mp3',
+music_large_simple_mp3 = cohydra.profile.ConvertProfile(
+  top_dir='/home/dseomn/Music/profiles/large-simple-mp3',
   parent=music_default,
-  select_cb=music_large_mp3_select_cb,
-  convert_cb=music_large_mp3_convert_cb,
+  select_cb=music_large_simple_mp3_select_cb,
+  convert_cb=music_large_simple_mp3_convert_cb,
   )
 
 
