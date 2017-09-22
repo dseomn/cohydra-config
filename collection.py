@@ -4,6 +4,9 @@ import os
 import subprocess
 import urllib.parse
 
+import mutagen
+import mutagen.id3
+
 import cohydra.profile
 
 
@@ -212,9 +215,7 @@ def music_large_simple_mp3_select_cb(profile, src_relpath):
   else:
     mime_major, __discard, __discard = mime.partition('/')
 
-  if src_relpath.endswith('.mp3'):
-    return None
-  elif mime_major == 'image':
+  if mime_major == 'image':
     return os.path.join(os.path.dirname(src_relpath), 'folder.jpg')
   else:
     return src_relpath + '.mp3'
@@ -244,6 +245,8 @@ def music_large_simple_mp3_convert_cb(profile, src, dst):
         '!',
         'audioconvert',
         '!',
+        'rgvolume',
+        '!',
         'lamemp3enc', 'quality=0', 'encoding-engine-quality=2',
         '!',
         'xingmux',
@@ -256,6 +259,9 @@ def music_large_simple_mp3_convert_cb(profile, src, dst):
       stderr=subprocess.PIPE,
       check=True,
       )
+    id3 = mutagen.id3.ID3(dst)
+    id3.delall('RVA2')
+    id3.save()
 
 
 music_large_simple_mp3 = cohydra.profile.ConvertProfile(
