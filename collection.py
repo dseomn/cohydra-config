@@ -69,6 +69,11 @@ def music_default_select_cb(profile, src_relpath, dst_relpath, contents):
     if mime_major in (
         'audio',
         ):
+      if mime in (
+          'audio/x-mpegurl',
+          ):
+        # Skip it.
+        continue
       keep.append(entry)
     elif mime_major in (
         'application',
