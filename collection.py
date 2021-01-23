@@ -70,6 +70,7 @@ def music_default_select_cb(profile, src_relpath, dst_relpath, contents):
         'audio',
         ):
       if mime in (
+          'audio/mpegurl',
           'audio/x-mpegurl',
           ):
         # Skip it.
