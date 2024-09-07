@@ -256,7 +256,7 @@ def music_large_simple_mp3_convert_cb(profile, src, dst):
         '!',
         'audioconvert',
         '!',
-        'rgvolume',
+        'rgvolume', 'pre-amp=-5.0',
         '!',
         'lamemp3enc', 'quality=0', 'encoding-engine-quality=2',
         '!',
