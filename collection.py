@@ -17,6 +17,7 @@ logging.getLogger().setLevel(logging.DEBUG)
 
 
 mimetypes.add_type('application/CDFV2-unknown', '.jwl', False)
+mimetypes.add_type('application/octet-stream', '.map', False)
 mimetypes.add_type('application/octet-stream', '.ncd', False)
 mimetypes.add_type('application/x-cdrdao-toc', '.toc', False)
 mimetypes.add_type('application/x-cue', '.cue', False)
