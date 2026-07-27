@@ -319,6 +319,7 @@ def music_videos_select_cb(profile, src_relpath, dst_relpath, contents):
 
     if mime.startswith('video/') or mime in (
         'application/x-iso9660-image',
+        'application/zip',
         ):
       keep.append(entry)
 
