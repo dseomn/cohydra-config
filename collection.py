@@ -57,7 +57,7 @@ def music_default_select_cb(profile, src_relpath, dst_relpath, contents):
     elif entry.name.endswith('.original'):
       continue
 
-    mime, encoding = mimetypes.guess_type(pathlib.PurePath(entry.path).as_uri(), strict=False)
+    mime, encoding = mimetypes.guess_type(pathlib.Path(entry.path).as_uri(), strict=False)
     if mime is None:
       profile.log(
         logging.ERROR,
@@ -169,7 +169,7 @@ music_default = cohydra.profile.FilterProfile(
 
 
 def music_large_select_cb(profile, src_relpath):
-  mime, encoding = mimetypes.guess_type(pathlib.PurePath(profile.src_path(src_relpath)).as_uri(), strict=False)
+  mime, encoding = mimetypes.guess_type(pathlib.Path(profile.src_path(src_relpath)).as_uri(), strict=False)
   if mime is None:
     mime_major = None
   else:
@@ -221,7 +221,7 @@ music_large_sanitized = cohydra.profile.SanitizeFilenameProfile(
 
 
 def music_large_simple_mp3_select_cb(profile, src_relpath):
-  mime, encoding = mimetypes.guess_type(pathlib.PurePath(profile.src_path(src_relpath)).as_uri(), strict=False)
+  mime, encoding = mimetypes.guess_type(pathlib.Path(profile.src_path(src_relpath)).as_uri(), strict=False)
   if mime is None:
     mime_major = None
   else:
@@ -274,7 +274,7 @@ def music_large_simple_mp3_convert_cb(profile, src, dst):
     id3 = mutagen.id3.ID3(dst)
     id3.delall('RVA2')
     for entry in os.scandir(os.path.dirname(src)):
-      if mimetypes.guess_type(pathlib.PurePath(entry.path).as_uri(), strict=False)[0].startswith('image/'):
+      if mimetypes.guess_type(pathlib.Path(entry.path).as_uri(), strict=False)[0].startswith('image/'):
         with wand.image.Image(filename=entry.path) as folder_img:
           folder_img.transform(resize='300x300>')
           folder_img.compression_quality = 90
@@ -313,7 +313,7 @@ def music_videos_select_cb(profile, src_relpath, dst_relpath, contents):
       keep.append(entry)
       continue
 
-    mime, encoding = mimetypes.guess_type(pathlib.PurePath(entry.path).as_uri(), strict=False)
+    mime, encoding = mimetypes.guess_type(pathlib.Path(entry.path).as_uri(), strict=False)
     if mime is None:
       continue
 
