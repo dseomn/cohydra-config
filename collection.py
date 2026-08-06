@@ -24,7 +24,6 @@ mimetypes.add_type('application/x-cue', '.cue', False)
 mimetypes.add_type('text/plain', '.log', False)
 mimetypes.add_type('text/url', '.url', False)
 mimetypes.add_type('video/dvd', '.vob', False)
-mimetypes.add_type('video/mp4', '.m4v', False)
 
 
 music_master = cohydra.profile.RootProfile(
